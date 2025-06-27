@@ -4,9 +4,6 @@ from module_1 import *
 import os
 import sqlite3
 import datetime
- 
-
-
 
 dirname = os.path.dirname(__file__)
 os.chdir(dirname)
@@ -93,7 +90,7 @@ L_sn.place(x=624, y=45, width=120, height=40)
 L_n.place(x=635, y=100, width=60, height=40)
 L_mn.place(x=625, y=155, width=120, height=40)
 L_db.place(x=634, y=210, width=150, height=40)
-L_s.place(x=619, y=265, width=180, height=40)
+L_s.place(x=620, y=265, width=180, height=40)
 
 E_sn.place(x=647, y=80, width=220, height=25)
 E_n.place(x=647, y=135, width=220, height=25)
@@ -117,15 +114,15 @@ M1 = Menu(M, tearoff = 0)
 
 M.add_cascade(label = "Файл", menu = M1)
 
-M1.add_command(label = "Настройки") ##, command = setup
-M1.add_command(label = "Администрирование", command = lambda: administration(ttk, sqlite3, connection, cursor))
+M1.add_command(label = "Настройки", command=lambda:options(tk, L_iid, L_sn, L_n, L_mn, L_db, L_s))
+M1.add_command(label = "Администрирование", command = lambda: administration(ttk, sqlite3, connection, cursor, log_file))
 M1.add_command(label = "Создать справку")
 M1.add_command(label = "Выход", command = tk.quit)
 
 M2 = Menu(M, tearoff = 0)
 M.add_cascade(label = "Сведения", menu = M2)
-M2.add_command(label = "О программе")
-M2.add_command(label = "Документация")
+M2.add_command(label = "О программе", command=lambda:about())
+M2.add_command(label = "Документация", command=lambda:documentary())
 
 
 tk.config(menu=M)

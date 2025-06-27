@@ -1,38 +1,169 @@
-from msilib.schema import ComboBox
 from tkinter import END, DISABLED, NORMAL
 from tkinter import *
+from tkinter import Toplevel
 import datetime
+import hashlib
 
-def options():
-    options = Tk()
+def dark(tk, options, color, R1, R2, lang, C1, C2, L_iid, L_sn, L_n, L_mn, L_db, L_s):
+    
+    tk["bg"] = "#212324"
+
+    L_iid["bg"] = "#212324"
+    L_iid["fg"] = "#F1F1F1"
+    L_sn["bg"] = "#212324"
+    L_sn["fg"] = "#F1F1F1"
+    L_n["bg"] = "#212324"
+    L_n["fg"] = "#F1F1F1"
+    L_mn["bg"] = "#212324"
+    L_mn["fg"] = "#F1F1F1"
+    L_db["bg"] = "#212324"
+    L_db["fg"] = "#F1F1F1"
+    L_s["bg"] = "#212324"
+    L_s["fg"] = "#F1F1F1"
+
+    options["bg"] = "#212324"
+
+    color["bg"] = "#212324"
+    color["fg"] = "#F1F1F1"
+    R1["bg"] = "#212324"
+    R1["fg"] = "#F1F1F1"
+    R2["bg"] = "#212324"
+    R2["fg"] = "#F1F1F1"
+
+    lang["bg"] = "#212324"
+    lang["fg"] = "#F1F1F1"
+    C1["bg"] = "#212324"
+    C1["fg"] = "#F1F1F1"
+    C2["bg"] = "#212324"
+    C2["fg"] = "#F1F1F1"
+
+def light(tk, options, color, R1, R2, lang, C1, C2, L_iid, L_sn, L_n, L_mn, L_db, L_s):
+
+    tk["bg"] = "#F1F1F1"
+
+    L_iid["bg"] = "#F1F1F1"
+    L_iid["fg"] = "#212324"
+    L_sn["bg"] = "#F1F1F1"
+    L_sn["fg"] = "#212324"
+    L_n["bg"] = "#F1F1F1"
+    L_n["fg"] = "#212324"
+    L_mn["bg"] = "#F1F1F1"
+    L_mn["fg"] = "#212324"
+    L_db["bg"] = "#F1F1F1"
+    L_db["fg"] = "#212324"
+    L_s["bg"] = "#F1F1F1"
+    L_s["fg"] = "#212324"
+
+    options["bg"] = "#F1F1F1"
+
+    color["bg"] = "#F1F1F1"
+    color["fg"] = "#212324"
+    R1["bg"] = "#F1F1F1"
+    R1["fg"] = "#212324"
+    R2["bg"] = "#F1F1F1"
+    R2["fg"] = "#212324"
+
+    lang["bg"] = "#F1F1F1"
+    lang["fg"] = "#212324"
+    C1["bg"] = "#F1F1F1"
+    C1["fg"] = "#212324"
+    C2["bg"] = "#F1F1F1"
+    C2["fg"] = "#212324"
+
+def eng(options, color, R1, R2, lang, C1, C2):
+    options.title("Options")
+    color.config(text = "Color theme:")
+    R1.config(text = "Light")
+    R2.config(text = "Dark")
+    lang.config(text = "Language:")
+    C1.config(text = "Russian")
+    C2.config(text = "English")
+
+def ru(options, color, R1, R2, lang, C1, C2):
+    options.title("Настройки")
+    color.config(text = "Цветовая тема:")
+    R1.config(text = "Светлая")
+    R2.config(text = "Темная")
+    lang.config(text = "Язык:")
+    C1.config(text = "Русский")
+    C2.config(text = "Английский")
+
+def options(tk, L_iid, L_sn, L_n, L_mn, L_db, L_s):
+    options = Toplevel()
     options.title("Настройки")
     options.geometry("550x450+960+50")
     options.resizable(False, False)
 
-    L1 = Label(options, text = "Язык", font = "Arial, 14", anchor = "w")
-    L2 = Label(options, text = "Тема", font = "Arial, 14", anchor = "w")
-    R1 = Radiobutton(options, text = "Темная", anchor = "w")
-    R2 = Radiobutton(options, text = "Светлая", anchor = "w")
-    Cb1 = ComboBox(options)
+    color = Label(options, text="Цветовая тема:", font="Arial, 20", anchor="w")
+    var = IntVar()
+    var.set(0)
+    R1 = Radiobutton(options, text="Светлая", font="Arial, 15", value=0, variable = var, command = lambda: light(tk, options, color, R1, R2, lang, C1, C2, L_iid, L_sn, L_n, L_mn, L_db, L_s))
+    R2 = Radiobutton(options, text="Темная", font="Arial, 15", value=1, variable = var, command = lambda: dark(tk, options, color, R1, R2, lang, C1, C2, L_iid, L_sn, L_n, L_mn, L_db, L_s))
+
+    color.place(x=20,y=40)
+    R1.place(x=20,y=90)
+    R2.place(x=130,y=90)
+    
+    lang = Label(options, text="Язык:", font="Arial, 20", anchor="w")
+    varr = IntVar()
+    varr.set(0)
+    C1 = Checkbutton(options, text="Русский", font="Arial, 15", onvalue=0, variable=varr, command = lambda:ru(options, color, R1, R2, lang, C1, C2))
+    C2 = Checkbutton(options, text="Английский", font="Arial, 15", onvalue=1, variable=varr, command = lambda:eng(options, color, R1, R2, lang, C1, C2))
+
+    lang.place(x=20,y=140)
+    C1.place(x=20, y=180)
+    C2.place(x=130, y=180)
+
+    
+
+def about():
+    about = Tk()
+    about.title("О программе")
+    about.geometry("350x300+960+50")
+    about.resizable(False, False)
+
+    L1 = Label(about, text="Разработчик: Романенко Д.", font="Arial, 14", anchor="w")
+    L2 = Label(about, text="Версия: 0.1", font="Arial, 14", anchor="w")
+    L3 = Label(about, text="Дата: 26.06.2025", font="Arial, 14", anchor="w")
+    L4 = Label(about, text="ОС: Windows 10", font="Arial, 14", anchor="w")
+    L5 = Label(about, text="ИС Студенты", font="Arial, 20", anchor="w")
+
+    L5.place(x=85, y=50)
+    L1.place(x=50, y=110)
+    L2.place(x=50, y=140)
+    L3.place(x=50, y=170)
+    L4.place(x=50, y=200)
+    
+def documentary():
+    doc = Tk()
+    doc.title("Документация")
+    doc.geometry("350x220+960+50")
+    doc.resizable(False, False)
+    
+    L1 = Label(doc, text="Представьте, что тут", font="Arial, 19")
+    L2 = Label(doc, text="супер крутая документация", font="Arial, 19")
+    L3 = Label(doc, text="для супер крутой ИС", font="Arial, 19")
+
+    L1.place(x=45, y=50)
+    L2.place(x=10, y=85)
+    L3.place(x=45, y=120)
 
 
-def administration(ttk, sqlite3, connection, cursor):
+def administration(ttk, sqlite3, connection, cursor, log_file):
 
-    tkk = Tk()
+    tkk = Toplevel()
     tkk.title("Администрирование")
     tkk.geometry("700x570+960+50")
     tkk.resizable(False, False)
 
-    columns_tuple = ("ID", "username", "password")
+    columns_tuple = ("ID", "username")
     tree = ttk.Treeview(tkk, columns= columns_tuple, show="headings")
 
     tree.heading("ID", text = "ID пользователя", anchor = "w")
     tree.heading("username", text = "Имя пользователя", anchor = "w")
-    tree.heading("password", text = "Пароль", anchor = "w")
 
     tree.column("ID", width = 40)
     tree.column("username", width = 70)
-    tree.column("password", width = 50)
 
 
     connection = sqlite3.connect("base.db")
@@ -44,7 +175,6 @@ def administration(ttk, sqlite3, connection, cursor):
 
     for data in users:
         tree.insert("", END, values=data) 
-
     
     tree.place(x = 10,y = 10, width = 420, height = 530)
     
@@ -55,10 +185,9 @@ def administration(ttk, sqlite3, connection, cursor):
     E_username = Entry(tkk, text="")
     E_password = Entry(tkk, text="")
     
-    B_ed = Button(tkk, text="Изменить", font = 'Arial, 13', command = lambda: admin_edit(tree, L_iid, E_username, E_password, B_ed, B_del, B_add, B_bl, cursor, connection))
-    B_add = Button(tkk, text="Ввести", font = 'Arial, 13', command = lambda: admin_add(tree, E_username, E_password, cursor, connection))
-    B_del = Button(tkk, text="Удалить", font = 'Arial, 13', command = lambda: admin_del(tree, cursor, connection))
-    B_bl = Button(tkk, text="Блокировать", font = 'Arial, 13')
+    B_ed = Button(tkk, text="Изменить", font = 'Arial, 13', command = lambda: admin_edit(tree, L_iid, E_username, E_password, B_ed, B_del, B_add, cursor, connection, log_file))
+    B_add = Button(tkk, text="Ввести", font = 'Arial, 13', command = lambda: admin_add(tree, E_username, E_password, cursor, connection, log_file))
+    B_del = Button(tkk, text="Удалить", font = 'Arial, 13', command = lambda: admin_del(tree, cursor, connection, log_file))
     
     SB = Scrollbar(tkk, orient = VERTICAL, command = tree.yview)
     
@@ -72,7 +201,6 @@ def administration(ttk, sqlite3, connection, cursor):
     B_ed.place(x=470, y=215, width=190, height=40)
     B_add.place(x=470, y=170, width=190, height=40)
     B_del.place(x=470, y=260, width=190, height=40)
-    B_bl.place(x=470, y=305, width=190, height=40)
     
     SB.place(x = 430, y = 10, height = 530)
     
@@ -80,9 +208,11 @@ def administration(ttk, sqlite3, connection, cursor):
                   
     tkk.mainloop()
 
-def admin_add(tree, E_username, E_password, cursor, connection):
+def admin_add(tree, E_username, E_password, cursor, connection, log_file):
     username = E_username.get()
     password = E_password.get()
+
+    password = hashlib.sha256(password.encode()).hexdigest()
 
     cursor.execute("INSERT INTO tab_2 (username, password) VALUES (?, ?)", (username, password))
     connection.commit()
@@ -97,14 +227,14 @@ def admin_add(tree, E_username, E_password, cursor, connection):
     for d in users:
         tree.insert('', END, values = d)    
     
-    # now=datetime.datetime.now()
-    # name = now.strftime("%d.%m.%Y_%H.%M.%S")
-    # log_file.write(f"{name} Запись {id} добавлена\n")
+    now=datetime.datetime.now()
+    name = now.strftime("%d.%m.%Y_%H.%M.%S")
+    log_file.write(f"{name} Новый пользователь добавлен\n")
         
     E_username.delete(0, END)
     E_password.delete(0, END)
     
-def admin_del(tree, cursor, connection):
+def admin_del(tree, cursor, connection, log_file):
     data = tree.item(tree.selection())
     data_ID = data["values"][0]
     cursor.execute(f"DELETE FROM tab_2 WHERE id={data_ID}")
@@ -118,11 +248,11 @@ def admin_del(tree, cursor, connection):
     for d in pipls:
         tree.insert('', END, values=d)
 
-    # now=datetime.datetime.now()
-    # name = now.strftime("%d.%m.%Y_%H.%M.%S")
-    # log_file.write(f"{name} Запись {id} удалена\n")
+    now=datetime.datetime.now()
+    name = now.strftime("%d.%m.%Y_%H.%M.%S")
+    log_file.write(f"{name} Пользователь {id} удален\n")
 
-def admin_edit(tree, L_iid, E_username, E_password, B_ed, B_del, B_add, B_bl, cursor, connection):
+def admin_edit(tree, L_iid, E_username, E_password, B_ed, B_del, B_add, cursor, connection, log_file):
     global id
 
     iid = tree.selection()
@@ -136,16 +266,16 @@ def admin_edit(tree, L_iid, E_username, E_password, B_ed, B_del, B_add, B_bl, cu
     L_iid.config(text=c)
 
     E_username.insert(0, username)
-    E_password.insert(0, password)
     
     B_ed.config(state=DISABLED)
-    B_add.config(text = "Сохранить", command = lambda: admin_save(tree, E_username, E_password, B_add, B_del, B_bl, B_ed, L_iid, connection, cursor))
+    B_add.config(text = "Сохранить", command = lambda: admin_save(tree, E_username, E_password, B_add, B_del, B_ed, L_iid, connection, cursor, log_file))
     B_del.config(state=DISABLED)
-    B_bl.config(state=DISABLED)
 
-def admin_save(tree, E_username, E_password, B_add, B_del, B_bl, B_ed, L_iid, connection, cursor):
+def admin_save(tree, E_username, E_password, B_add, B_del, B_ed, L_iid, connection, cursor, log_file):
     username = E_username.get()
     password = E_password.get()
+
+    password = hashlib.sha256(password.encode()).hexdigest()
     
     cursor.execute("UPDATE tab_2 SET username=?, password=? WHERE id=?", (username, password, id))
     connection.commit()
@@ -161,11 +291,16 @@ def admin_save(tree, E_username, E_password, B_add, B_del, B_bl, B_ed, L_iid, co
     E_username.delete(0, END)
     E_password.delete(0, END)
 
+    now=datetime.datetime.now()
+    name = now.strftime("%d.%m.%Y_%H.%M.%S")
+    log_file.write(f"{name} Запись пользователя {id} сохранена\n")
+
     B_del.config(state=NORMAL)
-    B_bl.config(state=NORMAL)
-    B_add.config(text="Ввести", command=lambda: admin_add(tree, E_username, E_password, cursor, connection))
+    B_add.config(text="Ввести", command=lambda: admin_add(tree, E_username, E_password, cursor, connection, log_file))
     B_ed.config(state=NORMAL)
     L_iid.config(text="IID: ")
+
+
 
 def on_closing(log_file, connection, tk):
     now = datetime.datetime.now()
@@ -280,7 +415,7 @@ def add_data(tree, E_sn, E_n, E_mn, E_db, E_s, log_file, connection, cursor):
     
     now=datetime.datetime.now()
     name = now.strftime("%d.%m.%Y_%H.%M.%S")
-    log_file.write(f"{name} Запись {id} добавлена\n")
+    log_file.write(f"{name} Новая запись добавлена\n")
         
     E_sn.delete(0, END)
     E_n.delete(0, END)
